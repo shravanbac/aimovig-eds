@@ -45,6 +45,31 @@ async function loadFonts() {
 }
 
 /**
+ * Builds the indications-bar auto-block and prepends it to main.
+ * Only shown if not previously dismissed in this session.
+ * @param {Element} main The container element
+ */
+function buildIndicationsBar(main) {
+  if (sessionStorage.getItem('indications-dismissed') === 'true') return;
+
+  const indicationsText = 'Aimovig<sup>\u00AE</sup> (erenumab-aooe) is a prescription medicine used for the preventive treatment of migraine in adults.';
+  const section = document.createElement('div');
+  section.append(
+    buildBlock('indications-bar', { elems: [] }),
+  );
+
+  // Populate the block cell with content
+  const cell = section.querySelector('div > div');
+  if (cell) {
+    const p = document.createElement('p');
+    p.innerHTML = `<strong>Approved Use:</strong> ${indicationsText}`;
+    cell.append(p);
+  }
+
+  main.prepend(section);
+}
+
+/**
  * Builds all synthetic blocks in a container element.
  * @param {Element} main The container element
  */
@@ -68,6 +93,7 @@ function buildAutoBlocks(main) {
       });
     }
 
+    buildIndicationsBar(main);
     buildHeroBlock(main);
   } catch (error) {
     // eslint-disable-next-line no-console
