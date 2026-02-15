@@ -157,6 +157,11 @@ async function loadLazy(doc) {
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
+
+  // Load exit interstitial modal for external links
+  loadCSS(`${window.hlx.codeBasePath}/blocks/modal/modal.css`);
+  const { default: initModal } = await import('../blocks/modal/modal.js');
+  initModal();
 }
 
 /**
