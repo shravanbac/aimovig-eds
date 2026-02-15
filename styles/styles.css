@@ -11,60 +11,79 @@
  */
 
 :root {
-  /* colors */
-  --background-color: white;
-  --light-color: #f8f8f8;
-  --dark-color: #505050;
-  --text-color: #131313;
-  --link-color: #3b63fb;
-  --link-hover-color: #1d3ecf;
+  /* brand colors */
+  --color-purple: #3a1d8e;
+  --color-purple-dark: #2d1670;
+  --color-purple-deeper: #1e0e52;
+  --color-coral: #e8573a;
+  --color-teal: #00a5b5;
+  --color-light-bg: #f7f5fb;
+  --color-white: #fff;
+
+  /* semantic colors */
+  --background-color: var(--color-white);
+  --light-color: var(--color-light-bg);
+  --dark-color: var(--color-purple-deeper);
+  --text-color: #333;
+  --text-color-muted: #666;
+  --link-color: var(--color-purple);
+  --link-hover-color: var(--color-purple-dark);
 
   /* fonts */
-  --body-font-family: roboto, roboto-fallback, sans-serif;
-  --heading-font-family: roboto-condensed, roboto-condensed-fallback, sans-serif;
+  --body-font-family: 'Open Sans', open-sans-fallback, sans-serif;
+  --heading-font-family: 'Nunito Sans', nunito-sans-fallback, sans-serif;
 
   /* body sizes */
-  --body-font-size-m: 22px;
-  --body-font-size-s: 19px;
-  --body-font-size-xs: 17px;
+  --body-font-size-m: 18px;
+  --body-font-size-s: 16px;
+  --body-font-size-xs: 14px;
 
   /* heading sizes */
-  --heading-font-size-xxl: 55px;
-  --heading-font-size-xl: 44px;
-  --heading-font-size-l: 34px;
-  --heading-font-size-m: 27px;
-  --heading-font-size-s: 24px;
-  --heading-font-size-xs: 22px;
+  --heading-font-size-xxl: 40px;
+  --heading-font-size-xl: 32px;
+  --heading-font-size-l: 24px;
+  --heading-font-size-m: 20px;
+  --heading-font-size-s: 18px;
+  --heading-font-size-xs: 16px;
 
   /* nav height */
   --nav-height: 64px;
+
+  /* layout */
+  --content-width: 1200px;
+  --section-spacing: 48px;
 }
 
 /* fallback fonts */
 @font-face {
-  font-family: roboto-condensed-fallback;
-  size-adjust: 88.82%;
+  font-family: nunito-sans-fallback;
+  size-adjust: 100.3%;
   src: local('Arial');
 }
 
 @font-face {
-  font-family: roboto-fallback;
-  size-adjust: 99.529%;
+  font-family: open-sans-fallback;
+  size-adjust: 105.5%;
   src: local('Arial');
+}
+
+@media (width >= 600px) {
+  :root {
+    --heading-font-size-xxl: 48px;
+    --heading-font-size-xl: 36px;
+    --heading-font-size-l: 28px;
+    --heading-font-size-m: 22px;
+    --heading-font-size-s: 20px;
+    --heading-font-size-xs: 18px;
+  }
 }
 
 @media (width >= 900px) {
   :root {
-    /* body sizes */
-    --body-font-size-m: 18px;
-    --body-font-size-s: 16px;
-    --body-font-size-xs: 14px;
-
-    /* heading sizes */
-    --heading-font-size-xxl: 45px;
-    --heading-font-size-xl: 36px;
-    --heading-font-size-l: 28px;
-    --heading-font-size-m: 22px;
+    --heading-font-size-xxl: 56px;
+    --heading-font-size-xl: 44px;
+    --heading-font-size-l: 32px;
+    --heading-font-size-m: 24px;
     --heading-font-size-s: 20px;
     --heading-font-size-xs: 18px;
   }
@@ -107,8 +126,9 @@ h6 {
   margin-top: 0.8em;
   margin-bottom: 0.25em;
   font-family: var(--heading-font-family);
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1.25;
+  color: var(--color-purple-deeper);
   scroll-margin: 40px;
 }
 
@@ -173,41 +193,52 @@ button {
   max-width: 100%;
   margin: 12px 0;
   border: 2px solid transparent;
-  border-radius: 2.4em;
-  padding: 0.5em 1.2em;
-  font-family: var(--body-font-family);
+  border-radius: 6px;
+  padding: 0.75em 1.5em;
+  font-family: var(--heading-font-family);
   font-style: normal;
-  font-weight: 500;
+  font-weight: 700;
+  font-size: var(--body-font-size-s);
   line-height: 1.25;
   text-align: center;
   text-decoration: none;
-  background-color: var(--link-color);
-  color: var(--background-color);
+  background-color: var(--color-coral);
+  color: var(--color-white);
   cursor: pointer;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  transition: background-color 0.2s ease;
 }
 
 a.button:hover,
 a.button:focus,
 button:hover,
 button:focus {
-  background-color: var(--link-hover-color);
+  background-color: #c9432a;
   cursor: pointer;
 }
 
 button:disabled,
 button:disabled:hover {
   background-color: var(--light-color);
+  color: var(--text-color-muted);
   cursor: unset;
 }
 
 a.button.secondary,
 button.secondary {
-  background-color: unset;
-  border: 2px solid currentcolor;
-  color: var(--text-color);
+  background-color: transparent;
+  border: 2px solid var(--color-purple);
+  color: var(--color-purple);
+}
+
+a.button.secondary:hover,
+a.button.secondary:focus,
+button.secondary:hover,
+button.secondary:focus {
+  background-color: var(--color-purple);
+  color: var(--color-white);
 }
 
 main img {
@@ -229,17 +260,23 @@ main img {
 
 /* sections */
 main > .section {
-  margin: 40px 0;
+  margin: var(--section-spacing) 0;
 }
 
 main > .section > div {
-  max-width: 1200px;
+  max-width: var(--content-width);
   margin: auto;
-  padding: 0 24px;
+  padding: 0 16px;
 }
 
 main > .section:first-of-type {
   margin-top: 0;
+}
+
+@media (width >= 600px) {
+  main > .section > div {
+    padding: 0 24px;
+  }
 }
 
 @media (width >= 900px) {
@@ -251,7 +288,27 @@ main > .section:first-of-type {
 /* section metadata */
 main .section.light,
 main .section.highlight {
-  background-color: var(--light-color);
+  background-color: var(--color-light-bg);
   margin: 0;
-  padding: 40px 0;
+  padding: var(--section-spacing) 0;
+}
+
+main .section.dark {
+  background-color: var(--color-purple-deeper);
+  color: var(--color-white);
+  margin: 0;
+  padding: var(--section-spacing) 0;
+}
+
+main .section.dark h1,
+main .section.dark h2,
+main .section.dark h3,
+main .section.dark h4,
+main .section.dark h5,
+main .section.dark h6 {
+  color: var(--color-white);
+}
+
+main .section.dark a:any-link {
+  color: var(--color-teal);
 }
