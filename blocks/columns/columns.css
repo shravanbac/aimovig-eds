@@ -31,3 +31,118 @@
     order: unset;
   }
 }
+
+/* ==================== */
+
+/* PROMO VARIANT        */
+
+/* ==================== */
+.columns.promo {
+  background-color: #f5f5f5;
+  padding: 40px 0;
+}
+
+.columns.promo > div {
+  gap: 32px;
+}
+
+.columns.promo > div > div:not(.columns-img-col) {
+  order: 1;
+}
+
+.columns.promo > div > .columns-img-col {
+  order: 0;
+}
+
+.columns.promo h2 {
+  font-family: var(--heading-font-family);
+  font-weight: 800;
+  font-size: var(--heading-font-size-l);
+  color: var(--color-purple-deeper);
+  margin-top: 0;
+  line-height: 1.2;
+}
+
+.columns.promo p {
+  color: var(--text-color);
+  font-size: var(--body-font-size-s);
+  line-height: 1.6;
+}
+
+/* quote icon */
+.columns.promo .columns-promo-quote {
+  display: block;
+  color: var(--color-coral);
+  margin-bottom: 8px;
+  line-height: 1;
+}
+
+.columns.promo .columns-promo-quote svg {
+  width: 36px;
+  height: auto;
+}
+
+/* CTA link styled as button-like element */
+.columns.promo .columns-promo-cta {
+  margin-top: 4px;
+}
+
+.columns.promo .columns-promo-cta a:any-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-coral);
+  font-family: var(--heading-font-family);
+  font-weight: 700;
+  font-size: var(--body-font-size-s);
+  text-decoration: none;
+}
+
+.columns.promo .columns-promo-cta a:hover {
+  text-decoration: underline;
+}
+
+/* footnote */
+.columns.promo .columns-promo-footnote {
+  font-size: 13px;
+  color: var(--text-color-muted);
+  margin-top: 24px;
+  line-height: 1.5;
+}
+
+.columns.promo .columns-promo-footnote em {
+  font-style: normal;
+}
+
+/* promo image column */
+.columns.promo .columns-img-col img {
+  border-radius: 8px;
+}
+
+@media (width >= 900px) {
+  .columns.promo {
+    padding: 60px 0;
+  }
+
+  .columns.promo > div {
+    gap: 48px;
+  }
+
+  .columns.promo > div > div:not(.columns-img-col) {
+    flex: 0 0 55%;
+    order: 0;
+  }
+
+  .columns.promo > div > .columns-img-col {
+    flex: 1;
+    order: 1;
+  }
+
+  .columns.promo h2 {
+    font-size: var(--heading-font-size-xl);
+  }
+
+  .columns.promo .columns-promo-quote svg {
+    width: 44px;
+  }
+}
