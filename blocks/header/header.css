@@ -96,22 +96,16 @@ header nav .nav-utility {
   }
 
   header nav .nav-utility .default-content-wrapper {
-    max-width: calc(var(--content-width) + 64px);
-    margin: 0 auto;
-    padding: 0 32px;
-  }
-
-  header nav .nav-utility ul {
     display: flex;
     justify-content: flex-end;
     align-items: center;
     gap: 20px;
-    list-style: none;
-    margin: 0;
-    padding: 8px 0;
+    max-width: calc(var(--content-width) + 64px);
+    margin: 0 auto;
+    padding: 8px 32px;
   }
 
-  header nav .nav-utility li {
+  header nav .nav-utility .default-content-wrapper p {
     margin: 0;
   }
 
@@ -247,12 +241,14 @@ header .nav-brand {
 
 header nav .nav-brand img {
   width: 140px;
+  max-height: 40px;
   height: auto;
 }
 
 @media (width >= 900px) {
   header nav .nav-brand img {
     width: 160px;
+    max-height: 40px;
   }
 }
 
@@ -274,27 +270,28 @@ header nav[aria-expanded='true'] .nav-sections {
   align-self: start;
 }
 
-header nav .nav-sections ul {
+header nav .nav-sections .nav-items {
   list-style: none;
   padding-left: 0;
   font-size: var(--body-font-size-s);
+  margin: 0;
 }
 
-header nav .nav-sections ul > li {
+header nav .nav-sections .nav-items > li {
   font-weight: 700;
   color: var(--color-purple-deeper);
 }
 
-header nav .nav-sections ul > li > ul {
+header nav .nav-sections .nav-items > li > ul {
   margin-top: 0;
 }
 
-header nav .nav-sections ul > li > ul > li {
+header nav .nav-sections .nav-items > li > ul > li {
   font-weight: 600;
 }
 
 /* mobile accordion styles */
-header nav[aria-expanded='true'] .nav-sections .default-content-wrapper > ul > li {
+header nav[aria-expanded='true'] .nav-sections .nav-items > li {
   position: relative;
   border-bottom: 1px solid var(--color-light-bg);
   padding: 12px 0;
@@ -351,14 +348,14 @@ header nav[aria-expanded='true'] .nav-sections .nav-drop[aria-expanded='true']::
     align-self: unset;
   }
 
-  header nav .nav-sections .default-content-wrapper > ul {
+  header nav .nav-sections .nav-items {
     display: flex;
     gap: 28px;
     margin: 0;
     align-items: center;
   }
 
-  header nav .nav-sections .default-content-wrapper > ul > li {
+  header nav .nav-sections .nav-items > li {
     flex: 0 1 auto;
     position: relative;
     font-size: 15px;
@@ -366,11 +363,11 @@ header nav[aria-expanded='true'] .nav-sections .nav-drop[aria-expanded='true']::
     padding: 4px 0;
   }
 
-  header nav .nav-sections .default-content-wrapper > ul > li > a:any-link {
+  header nav .nav-sections .nav-items > li > a:any-link {
     color: var(--color-purple-deeper);
   }
 
-  header nav .nav-sections .default-content-wrapper > ul > li > a:hover {
+  header nav .nav-sections .nav-items > li > a:hover {
     color: var(--color-purple);
   }
 
@@ -401,12 +398,12 @@ header nav[aria-expanded='true'] .nav-sections .nav-drop[aria-expanded='true']::
   }
 
   /* dropdown panel */
-  header nav .nav-sections .default-content-wrapper > ul > li > ul {
+  header nav .nav-sections .nav-items > li > ul {
     display: none;
     position: relative;
   }
 
-  header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] > ul {
+  header nav .nav-sections .nav-items > li[aria-expanded='true'] > ul {
     display: block;
     position: absolute;
     left: -16px;
@@ -422,7 +419,7 @@ header nav[aria-expanded='true'] .nav-sections .nav-drop[aria-expanded='true']::
   }
 
   /* dropdown triangle */
-  header nav .nav-sections .default-content-wrapper > ul > li > ul::before {
+  header nav .nav-sections .nav-items > li > ul::before {
     content: '';
     position: absolute;
     top: -8px;
@@ -434,17 +431,17 @@ header nav[aria-expanded='true'] .nav-sections .nav-drop[aria-expanded='true']::
     border-bottom: 8px solid var(--color-purple);
   }
 
-  header nav .nav-sections .default-content-wrapper > ul > li > ul > li {
+  header nav .nav-sections .nav-items > li > ul > li {
     padding: 6px 0;
     font-weight: 600;
   }
 
-  header nav .nav-sections .default-content-wrapper > ul > li > ul > li > a:any-link {
+  header nav .nav-sections .nav-items > li > ul > li > a:any-link {
     color: var(--color-white);
     font-size: 15px;
   }
 
-  header nav .nav-sections .default-content-wrapper > ul > li > ul > li > a:hover {
+  header nav .nav-sections .nav-items > li > ul > li > a:hover {
     opacity: 0.85;
   }
 }

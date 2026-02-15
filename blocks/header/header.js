@@ -40,7 +40,7 @@ function closeOnFocusLost(e) {
 
 function openOnKeydown(e) {
   const focused = document.activeElement;
-  const isDrop = focused.className === 'nav-drop';
+  const isDrop = focused.classList.contains('nav-drop');
   if (isDrop && (e.code === 'Enter' || e.code === 'Space')) {
     const dropExpanded = focused.getAttribute('aria-expanded') === 'true';
     // eslint-disable-next-line no-use-before-define
@@ -60,7 +60,7 @@ function focusNavSection() {
  */
 function toggleAllNavSections(sections, expanded = false) {
   if (!sections) return;
-  sections.querySelectorAll('.nav-sections .default-content-wrapper > ul > li').forEach((section) => {
+  sections.querySelectorAll('.nav-items > li').forEach((section) => {
     section.setAttribute('aria-expanded', expanded);
   });
 }
@@ -110,6 +110,66 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
 }
 
 /**
+ * Strips button/button-container classes added by decorateButtons.
+ * @param {Element} container The element to clean up
+ */
+function stripButtonClasses(container) {
+  container.querySelectorAll('.button').forEach((btn) => { btn.className = ''; });
+  container.querySelectorAll('.button-container').forEach((bc) => { bc.className = ''; });
+}
+
+/**
+ * Transforms the DA.live nav-sections content into a single <ul class="nav-items">
+ * from the mixed <p><strong>heading</strong></p> + <ul> / standalone <p><strong><a>> structure.
+ * @param {Element} navSections The nav-sections element
+ */
+function buildNavItems(navSections) {
+  const wrapper = navSections.querySelector('.default-content-wrapper');
+  if (!wrapper) return;
+
+  const navList = document.createElement('ul');
+  navList.className = 'nav-items';
+
+  const children = [...wrapper.children];
+  let i = 0;
+  while (i < children.length) {
+    const el = children[i];
+
+    // Case 1: <p><strong>Text</strong></p> followed by <ul> → dropdown group
+    if (el.tagName === 'P' && children[i + 1] && children[i + 1].tagName === 'UL') {
+      const strong = el.querySelector('strong');
+      const link = el.querySelector('a');
+      if (strong && !link) {
+        const li = document.createElement('li');
+        li.classList.add('nav-drop');
+        li.textContent = strong.textContent;
+        li.append(children[i + 1]); // move the <ul> into this <li>
+        navList.append(li);
+        i += 2;
+        // eslint-disable-next-line no-continue
+        continue;
+      }
+    }
+
+    // Case 2: <p><strong><a href="...">Label</a></strong></p> → standalone link
+    if (el.tagName === 'P') {
+      const link = el.querySelector('a');
+      if (link) {
+        const li = document.createElement('li');
+        link.className = '';
+        li.append(link);
+        navList.append(li);
+      }
+    }
+
+    i += 1;
+  }
+
+  wrapper.textContent = '';
+  wrapper.append(navList);
+}
+
+/**
  * loads and decorates the header, mainly the nav
  * @param {Element} block The header block element
  */
@@ -132,28 +192,24 @@ export default async function decorate(block) {
     if (section) section.classList.add(`nav-${c}`);
   });
 
-  // decorate brand logo — strip button class from the logo link
-  const navBrand = nav.querySelector('.nav-brand');
-  if (navBrand) {
-    const brandLink = navBrand.querySelector('.button');
-    if (brandLink) {
-      brandLink.className = '';
-      brandLink.closest('.button-container').className = '';
-    }
-  }
+  // Strip button classes that decorateButtons adds to all links in the fragment
+  stripButtonClasses(nav);
 
-  // decorate main nav sections with dropdowns
+  // Transform nav-sections from DA.live <p>/<ul> structure into a navigable list
   const navSections = nav.querySelector('.nav-sections');
   if (navSections) {
-    navSections.querySelectorAll(':scope .default-content-wrapper > ul > li').forEach((navSection) => {
-      if (navSection.querySelector('ul')) navSection.classList.add('nav-drop');
-      navSection.addEventListener('click', () => {
-        const dropExpanded = navSection.getAttribute('aria-expanded') === 'true';
-        if (isDesktop.matches) {
-          toggleAllNavSections(navSections);
-        }
-        navSection.setAttribute('aria-expanded', dropExpanded ? 'false' : 'true');
-      });
+    buildNavItems(navSections);
+
+    navSections.querySelectorAll('.nav-items > li').forEach((navItem) => {
+      if (navItem.classList.contains('nav-drop')) {
+        navItem.addEventListener('click', () => {
+          const dropExpanded = navItem.getAttribute('aria-expanded') === 'true';
+          if (isDesktop.matches) {
+            toggleAllNavSections(navSections);
+          }
+          navItem.setAttribute('aria-expanded', dropExpanded ? 'false' : 'true');
+        });
+      }
     });
   }
 
