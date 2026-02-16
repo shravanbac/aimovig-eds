@@ -170,6 +170,48 @@ function buildNavItems(navSections) {
 }
 
 /**
+ * Identifies nav sections by content rather than index.
+ * Resilient to extra sections injected by auto-blocks (e.g. indications-bar).
+ * @param {Element} nav The nav element containing fragment sections
+ * @returns {{ utility: Element|null, brand: Element|null,
+ *             sections: Element|null, tools: Element|null }}
+ */
+function identifySections(nav) {
+  const result = {
+    utility: null, brand: null, sections: null, tools: null,
+  };
+  const sectionEls = [...nav.querySelectorAll(':scope > .section')];
+
+  // Brand: the section containing a <picture> element (logo)
+  result.brand = sectionEls.find((s) => s.querySelector('picture')) || null;
+
+  // Sections: the section containing <ul> (nav link lists)
+  result.sections = sectionEls.find((s) => s.querySelector('ul')) || null;
+
+  // Utility & Tools: remaining sections in document order
+  const remaining = sectionEls.filter(
+    (s) => s !== result.brand && s !== result.sections,
+  );
+
+  // Utility comes before brand; tools comes after sections
+  remaining.forEach((s) => {
+    if (!result.brand) {
+      result.tools = s;
+      return;
+    }
+    const pos = s.compareDocumentPosition(result.brand);
+    // eslint-disable-next-line no-bitwise
+    if (pos & Node.DOCUMENT_POSITION_FOLLOWING) {
+      result.utility = s;
+    } else {
+      result.tools = s;
+    }
+  });
+
+  return result;
+}
+
+/**
  * loads and decorates the header, mainly the nav
  * @param {Element} block The header block element
  */
@@ -185,18 +227,24 @@ export default async function decorate(block) {
   nav.id = 'nav';
   while (fragment.firstElementChild) nav.append(fragment.firstElementChild);
 
-  // Assign 4 sections: utility, brand, sections, tools
-  const classes = ['utility', 'brand', 'sections', 'tools'];
-  classes.forEach((c, i) => {
-    const section = nav.children[i];
-    if (section) section.classList.add(`nav-${c}`);
-  });
+  // Remove any auto-block sections that leaked into the fragment (e.g. indications-bar)
+  nav.querySelectorAll('.indications-bar-container').forEach((s) => s.remove());
 
   // Strip button classes that decorateButtons adds to all links in the fragment
   stripButtonClasses(nav);
 
+  // Identify sections by content instead of fragile index order
+  const {
+    utility, brand, sections, tools,
+  } = identifySections(nav);
+
+  if (utility) utility.classList.add('nav-utility');
+  if (brand) brand.classList.add('nav-brand');
+  if (sections) sections.classList.add('nav-sections');
+  if (tools) tools.classList.add('nav-tools');
+
   // Transform nav-sections from DA.live <p>/<ul> structure into a navigable list
-  const navSections = nav.querySelector('.nav-sections');
+  const navSections = sections;
   if (navSections) {
     buildNavItems(navSections);
 
@@ -214,9 +262,8 @@ export default async function decorate(block) {
   }
 
   // decorate tools — style CTA button
-  const navTools = nav.querySelector('.nav-tools');
-  if (navTools) {
-    const ctaLink = navTools.querySelector('a');
+  if (tools) {
+    const ctaLink = tools.querySelector('a');
     if (ctaLink) {
       ctaLink.className = 'nav-cta';
     }

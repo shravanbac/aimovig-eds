@@ -50,6 +50,8 @@ async function loadFonts() {
  * @param {Element} main The container element
  */
 function buildIndicationsBar(main) {
+  // Only add to the page's main element, not fragment mains
+  if (!document.body.contains(main)) return;
   if (sessionStorage.getItem('indications-dismissed') === 'true') return;
 
   const indicationsText = 'Aimovig<sup>\u00AE</sup> (erenumab-aooe) is a prescription medicine used for the preventive treatment of migraine in adults.';
