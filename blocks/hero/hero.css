@@ -32,14 +32,14 @@
   width: 100%;
   min-height: 300px;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   background: linear-gradient(
     90deg,
-    rgb(0 0 0 / 65%) 0%,
-    rgb(0 0 0 / 35%) 50%,
-    rgb(0 0 0 / 0%) 75%
+    rgb(0 0 0 / 45%) 0%,
+    rgb(0 0 0 / 20%) 40%,
+    transparent 65%
   );
-  padding: 40px 16px;
+  padding: 40px 16px 48px;
 }
 
 /* text content */
@@ -52,29 +52,36 @@
 .hero .hero-content h1 {
   font-family: var(--heading-font-family);
   font-weight: 800;
-  font-size: var(--heading-font-size-xxl);
+  font-size: 48px;
   color: var(--color-white);
   margin: 0 0 16px;
   line-height: 1.1;
 }
 
-/* subtext with coral/magenta highlight bar */
+/* subtext with teal highlight bar */
+
+/* Reference: .quantum-hero h5 { background-color: #00a0dd; padding: 2px 12px;
+   box-decoration-break: clone } */
 .hero .hero-content .hero-subtext {
   display: inline;
-  background-color: #00a0dd;
+  background-color: #00a5b5;
   color: var(--color-white);
   font-family: var(--heading-font-family);
   font-weight: 700;
   font-size: var(--body-font-size-m);
-  line-height: 1.8;
-  padding: 4px 8px;
+  line-height: 2;
+  padding: 4px 12px;
   margin: 0;
   box-decoration-break: clone;
 }
 
 @media (width >= 600px) {
   .hero .hero-overlay {
-    padding: 48px 24px;
+    padding: 48px 24px 56px;
+  }
+
+  .hero .hero-content h1 {
+    font-size: 60px;
   }
 
   .hero .hero-content {
@@ -102,7 +109,7 @@
   }
 
   .hero .hero-content h1 {
-    font-size: var(--heading-font-size-xxl);
+    font-size: 76px;
     margin-bottom: 24px;
   }
 
