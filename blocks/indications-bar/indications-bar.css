@@ -1,23 +1,25 @@
 /* indications bar — fixed at very top of page, above header */
+
+/* Reference: .IndicationsXA { background-color: #ededed } */
 .indications-bar {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 100;
-  background-color: var(--color-white);
-  border-bottom: 1px solid #e0e0e0;
-  padding: 10px 16px;
-  font-size: var(--body-font-size-xs);
-  line-height: 1.4;
-  color: var(--text-color);
+  background-color: var(--color-light-bg);
+  padding: 12px 15px;
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  line-height: 20px;
+  color: #666;
 }
 
 .indications-bar .indications-bar-inner {
   display: flex;
   align-items: flex-start;
   gap: 12px;
-  max-width: var(--content-width);
+  max-width: 1400px;
   margin: 0 auto;
 }
 
@@ -29,10 +31,9 @@
   margin: 0;
 }
 
+/* Reference: .IndicationsXA .indications__copy strong { color: #8f1f60 } */
 .indications-bar .indications-bar-content strong {
-  color: var(--color-magenta);
-  font-family: var(--heading-font-family);
-  font-weight: 700;
+  color: var(--color-wine-dark);
 }
 
 .indications-bar .indications-bar-close {
@@ -57,19 +58,12 @@
   background: transparent;
 }
 
-@media (width >= 600px) {
+@media (width >= 768px) {
   .indications-bar {
-    padding: 10px 24px;
-    font-size: var(--body-font-size-s);
+    font-size: 16px;
   }
 
   .indications-bar .indications-bar-inner {
     align-items: center;
-  }
-}
-
-@media (width >= 900px) {
-  .indications-bar {
-    padding: 10px 32px;
   }
 }

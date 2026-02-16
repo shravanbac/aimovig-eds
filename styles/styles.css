@@ -11,27 +11,28 @@
  */
 
 :root {
-  /* brand colors */
-  --color-purple: #3a1d8e;
-  --color-purple-dark: #2d1670;
-  --color-purple-deeper: #1e0e52;
+  /* brand colors — extracted from reference site CSS */
+  --color-wine: #901f61;
+  --color-wine-dark: #8f1f60;
+  --color-blue: #00a0dd;
+  --color-gold: #ffd821;
+  --color-orange: #ff9e1b;
+  --color-teal-cta: #0393ca;
   --color-coral: #e8573a;
-  --color-magenta: #7b2d8e;
-  --color-teal: #00a5b5;
-  --color-light-bg: #f7f5fb;
+  --color-light-bg: #ededed;
   --color-white: #fff;
 
   /* semantic colors */
   --background-color: var(--color-white);
   --light-color: var(--color-light-bg);
-  --dark-color: var(--color-purple-deeper);
-  --text-color: #333;
+  --dark-color: var(--color-wine);
+  --text-color: #444;
   --text-color-muted: #666;
-  --link-color: var(--color-purple);
-  --link-hover-color: var(--color-purple-dark);
+  --link-color: var(--color-blue);
+  --link-hover-color: var(--color-wine);
 
-  /* fonts */
-  --body-font-family: 'Open Sans', open-sans-fallback, sans-serif;
+  /* fonts — reference uses NunitoSans-Regular / NunitoSans-Bold */
+  --body-font-family: 'Nunito Sans', nunito-sans-fallback, sans-serif;
   --heading-font-family: 'Nunito Sans', nunito-sans-fallback, sans-serif;
 
   /* body sizes */
@@ -130,7 +131,7 @@ h6 {
   font-family: var(--heading-font-family);
   font-weight: 700;
   line-height: 1.25;
-  color: var(--color-purple-deeper);
+  color: var(--color-wine);
   scroll-margin: 40px;
 }
 
@@ -204,7 +205,7 @@ button {
   line-height: 1.25;
   text-align: center;
   text-decoration: none;
-  background-color: var(--color-coral);
+  background-color: var(--color-wine);
   color: var(--color-white);
   cursor: pointer;
   overflow: hidden;
@@ -217,7 +218,7 @@ a.button:hover,
 a.button:focus,
 button:hover,
 button:focus {
-  background-color: #c9432a;
+  background-color: var(--color-wine-dark);
   cursor: pointer;
 }
 
@@ -231,15 +232,15 @@ button:disabled:hover {
 a.button.secondary,
 button.secondary {
   background-color: transparent;
-  border: 2px solid var(--color-purple);
-  color: var(--color-purple);
+  border: 2px solid var(--color-wine);
+  color: var(--color-wine);
 }
 
 a.button.secondary:hover,
 a.button.secondary:focus,
 button.secondary:hover,
 button.secondary:focus {
-  background-color: var(--color-purple);
+  background-color: var(--color-wine);
   color: var(--color-white);
 }
 
@@ -296,7 +297,7 @@ main .section.highlight {
 }
 
 main .section.dark {
-  background-color: var(--color-purple-deeper);
+  background-color: var(--color-wine);
   color: var(--color-white);
   margin: 0;
   padding: var(--section-spacing) 0;
@@ -312,5 +313,5 @@ main .section.dark h6 {
 }
 
 main .section.dark a:any-link {
-  color: var(--color-teal);
+  color: var(--color-blue);
 }

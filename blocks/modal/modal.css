@@ -31,7 +31,7 @@
   font-family: var(--heading-font-family);
   font-weight: 700;
   font-size: var(--heading-font-size-m);
-  color: var(--color-purple-deeper);
+  color: var(--color-wine);
   margin: 0 0 16px;
   line-height: 1.3;
 }
@@ -80,10 +80,10 @@
   width: 100%;
   margin: 0;
   padding: 12px 24px;
-  border: 2px solid var(--color-purple);
+  border: 2px solid var(--color-wine);
   border-radius: 6px;
   background: transparent;
-  color: var(--color-purple);
+  color: var(--color-wine);
   font-family: var(--heading-font-family);
   font-weight: 700;
   font-size: var(--body-font-size-s);
@@ -92,7 +92,7 @@
 }
 
 .modal-overlay .modal-cancel:hover {
-  background-color: var(--color-purple);
+  background-color: var(--color-wine);
   color: var(--color-white);
 }
 
