@@ -52,6 +52,15 @@ function buildBackToTop(footer) {
 }
 
 /**
+ * Strips button/button-container classes added by decorateButtons.
+ * @param {Element} container The element to clean up
+ */
+function stripButtonClasses(container) {
+  container.querySelectorAll('.button').forEach((btn) => { btn.className = ''; });
+  container.querySelectorAll('.button-container').forEach((bc) => { bc.className = ''; });
+}
+
+/**
  * loads and decorates the footer
  * @param {Element} block The footer block element
  */
@@ -65,6 +74,9 @@ export default async function decorate(block) {
   block.textContent = '';
   const footer = document.createElement('div');
   while (fragment.firstElementChild) footer.append(fragment.firstElementChild);
+
+  // Strip button classes that decorateButtons adds to all links in the fragment
+  stripButtonClasses(footer);
 
   // assign section classes: nav, legal, brand
   const classes = ['nav', 'legal', 'brand'];
