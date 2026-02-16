@@ -61,6 +61,90 @@ function stripButtonClasses(container) {
 }
 
 /**
+ * Extracts brand/copyright content from the last legal <li> into a new section.
+ *
+ * The footer fragment packs the last <li> with:
+ *   <p><a>AdChoices</a></p>  ← stays in legal links
+ *   <hr>                      ← removed (replaced by CSS border)
+ *   <p>Copyright text</p>    ← moves to brand section
+ *   <ul><li><picture></li></ul>  ← Aimovig logo → legal row right side
+ *   <ul><li><picture></li></ul>  ← Amgen logo   → brand section right side
+ *
+ * @param {Element} footer The footer wrapper element
+ */
+function extractBrandSection(footer) {
+  const legalSection = footer.querySelector('.footer-legal');
+  if (!legalSection) return;
+
+  const wrapper = legalSection.querySelector('.default-content-wrapper');
+  if (!wrapper) return;
+
+  const legalUl = wrapper.querySelector(':scope > ul');
+  if (!legalUl) return;
+
+  const lastLi = legalUl.querySelector(':scope > li:last-child');
+  if (!lastLi) return;
+
+  const hr = lastLi.querySelector('hr');
+  if (!hr) return;
+
+  // Gather all nodes after the <hr>
+  const afterHr = [];
+  let node = hr.nextSibling;
+  while (node) {
+    afterHr.push(node);
+    node = node.nextSibling;
+  }
+
+  // Categorise: copyright <p> and logo <ul>s (containing <picture>)
+  let copyrightP = null;
+  const logoUls = [];
+
+  afterHr.forEach((n) => {
+    if (n.nodeType !== 1) return;
+    if (n.tagName === 'P' && !n.querySelector('a')) copyrightP = n;
+    if (n.tagName === 'UL' && n.querySelector('picture')) logoUls.push(n);
+  });
+
+  // Move Aimovig logo (first) into legal section as right-aligned element
+  if (logoUls[0]) {
+    const logoDiv = document.createElement('div');
+    logoDiv.className = 'footer-legal-logo';
+    const pic = logoUls[0].querySelector('picture');
+    if (pic) logoDiv.append(pic);
+    wrapper.append(logoDiv);
+  }
+
+  // Build brand section: copyright text (left) + Amgen logo (right)
+  const brandSection = document.createElement('div');
+  brandSection.classList.add('section', 'footer-brand');
+  const brandWrapper = document.createElement('div');
+  brandWrapper.className = 'default-content-wrapper';
+
+  if (copyrightP) {
+    copyrightP.classList.add('footer-copyright');
+    brandWrapper.append(copyrightP);
+  }
+
+  if (logoUls[1]) {
+    const logosDiv = document.createElement('div');
+    logosDiv.className = 'footer-logos';
+    const pic = logoUls[1].querySelector('picture');
+    if (pic) logosDiv.append(pic);
+    brandWrapper.append(logosDiv);
+  }
+
+  brandSection.append(brandWrapper);
+
+  // Clean up: remove <hr> and remaining extracted nodes from last <li>
+  hr.remove();
+  afterHr.forEach((n) => { if (n.parentNode) n.remove(); });
+
+  // Insert brand section after legal
+  legalSection.after(brandSection);
+}
+
+/**
  * loads and decorates the footer
  * @param {Element} block The footer block element
  */
@@ -78,16 +162,17 @@ export default async function decorate(block) {
   // Strip button classes that decorateButtons adds to all links in the fragment
   stripButtonClasses(footer);
 
-  // assign section classes: nav, legal, brand
-  const classes = ['nav', 'legal', 'brand'];
-  classes.forEach((c, i) => {
-    const section = footer.children[i];
-    if (section) section.classList.add(`footer-${c}`);
-  });
+  // assign section classes: nav, legal (brand is created dynamically below)
+  const sections = [...footer.querySelectorAll(':scope > .section')];
+  if (sections[0]) sections[0].classList.add('footer-nav');
+  if (sections[1]) sections[1].classList.add('footer-legal');
 
   // build nav columns from heading + list pairs
   const navSection = footer.querySelector('.footer-nav');
   if (navSection) buildNavColumns(navSection);
+
+  // extract brand/copyright section from packed legal <li>
+  extractBrandSection(footer);
 
   // add back-to-top button
   buildBackToTop(footer);

@@ -14,11 +14,18 @@ footer .footer p {
   margin: 0;
 }
 
+/* global image safety net */
+footer .footer img {
+  max-height: 80px;
+  width: auto;
+  height: auto;
+}
+
 /* ==================== */
 
 /* BACK TO TOP          */
 
-/* Reference: background-color #8f1f60, NunitoSans-Bold 16px */
+/* Reference: #8f1f60, NunitoSans-Bold 16px, 200×50 mobile, 120×30 desktop */
 
 /* ==================== */
 footer .footer-back-to-top {
@@ -134,9 +141,11 @@ footer .footer-column a:hover {
 
 /* LEGAL LINKS          */
 
-/* Reference: .bottom-links-container .links a
-   { font-size: 11px; color: #00a0dd; NunitoSans-SemiBold;
-     separator ::after 1px #ccc } */
+/* Reference: .bottom-links-container
+   { display: flex; justify-content: space-between }
+   .links a { font-size: 11px; color: #00a0dd; NunitoSans-SemiBold }
+   separator ::after 1px #ccc
+   Aimovig logo right-aligned in same row */
 
 /* ==================== */
 footer .footer-legal {
@@ -144,13 +153,18 @@ footer .footer-legal {
   padding: 20px 0;
 }
 
+/* flex row: legal links (left) + Aimovig logo (right) */
 footer .footer-legal .default-content-wrapper {
   max-width: var(--content-width);
   margin: 0 auto;
   padding: 0 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
 }
 
-footer .footer-legal ul {
+footer .footer-legal > .default-content-wrapper > ul {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -158,6 +172,7 @@ footer .footer-legal ul {
   list-style: none;
   padding: 0;
   margin: 0;
+  flex: 1;
 }
 
 footer .footer-legal li {
@@ -165,7 +180,7 @@ footer .footer-legal li {
   align-items: center;
 }
 
-/* pipe separator between legal links */
+/* vertical separator between legal links */
 footer .footer-legal li::after {
   content: '';
   display: inline-block;
@@ -179,7 +194,7 @@ footer .footer-legal li:last-child::after {
   display: none;
 }
 
-/* override EDS default button styling — these must be plain text links */
+/* override EDS default button styling — plain text links */
 footer .footer-legal a:any-link {
   display: inline;
   background: none;
@@ -203,6 +218,19 @@ footer .footer-legal a:hover {
   color: var(--color-blue);
 }
 
+/* Aimovig logo — right-aligned in legal row */
+
+/* Reference: .bottom-links-container img { width: 161px; height: 61px } (desktop) */
+footer .footer-legal-logo {
+  flex-shrink: 0;
+  line-height: 0;
+}
+
+footer .footer-legal-logo img {
+  max-height: 60px;
+  width: auto;
+}
+
 @media (width >= 600px) {
   footer .footer-legal .default-content-wrapper {
     padding: 0 24px;
@@ -221,8 +249,9 @@ footer .footer-legal a:hover {
 
 /* Reference: .bottom-copyright-container
    { display: flex; justify-content: space-between; align-items: center }
+   hr { margin: 24px 0; border-color: #ccc }
    text: 10px #787878 NunitoSans-SemiBold
-   logo: height 22px mobile / 15px desktop */
+   logo: height 22px mobile / 15px desktop, width auto */
 
 /* ==================== */
 footer .footer-brand {
@@ -236,59 +265,33 @@ footer .footer-brand .default-content-wrapper {
   margin: 0 auto;
   padding: 24px 16px 0;
   display: flex;
-  flex-direction: column;
-  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
 }
 
 /* copyright text */
-footer .footer-brand p:first-child {
+footer .footer-copyright {
   color: #787878;
+  font-family: var(--body-font-family);
   font-size: 10px;
   font-weight: 600;
   line-height: 1.5;
-  order: 2;
 }
 
-/* logos */
-footer .footer-brand p:last-child {
-  order: 1;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+/* Amgen logo — right-aligned */
+footer .footer-logos {
+  flex-shrink: 0;
+  line-height: 0;
 }
 
-/* override EDS button styling on logo links */
-footer .footer-brand a:any-link {
-  display: inline;
-  background: none;
-  border: none;
-  border-radius: 0;
-  padding: 0;
-  margin: 0;
-  overflow: visible;
-  text-overflow: unset;
-  white-space: normal;
-}
-
-footer .footer-brand img {
-  height: 22px;
+footer .footer-logos img {
+  max-height: 25px;
   width: auto;
 }
 
 @media (width >= 600px) {
   footer .footer-brand .default-content-wrapper {
     padding: 24px 24px 0;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  footer .footer-brand p:first-child {
-    order: 1;
-  }
-
-  footer .footer-brand p:last-child {
-    order: 2;
   }
 }
 
@@ -297,7 +300,7 @@ footer .footer-brand img {
     padding: 24px 32px 0;
   }
 
-  footer .footer-brand img {
-    height: 15px;
+  footer .footer-logos img {
+    max-height: 20px;
   }
 }
