@@ -1,6 +1,6 @@
 /* header and nav layout */
 header {
-  height: var(--nav-height);
+  height: calc(var(--nav-height) + var(--indications-bar-height));
 }
 
 header .nav-wrapper {
@@ -8,7 +8,7 @@ header .nav-wrapper {
   width: 100%;
   z-index: 10;
   position: fixed;
-  top: 0;
+  top: var(--indications-bar-height);
 }
 
 header nav {
@@ -37,7 +37,7 @@ header nav[aria-expanded='true'] {
 
 @media (width >= 900px) {
   header {
-    height: calc(var(--nav-height) + 36px);
+    height: calc(var(--nav-height) + 36px + var(--indications-bar-height));
   }
 
   header .nav-wrapper {
@@ -86,11 +86,11 @@ header nav .nav-utility {
   header nav .nav-utility {
     display: block;
     position: fixed;
-    top: 0;
+    top: var(--indications-bar-height);
     left: 0;
     right: 0;
     z-index: 11;
-    background-color: var(--color-purple-deeper);
+    background-color: var(--color-magenta);
     padding: 0;
     margin: 0;
   }
@@ -125,7 +125,7 @@ header nav .nav-utility {
 /* position main nav below utility bar on desktop */
 @media (width >= 900px) {
   header .nav-wrapper {
-    top: 0;
+    top: var(--indications-bar-height);
     padding-top: 36px;
     background: transparent;
   }
@@ -461,20 +461,21 @@ header nav .nav-tools p {
 
 header nav .nav-cta {
   display: inline-block;
-  background-color: var(--color-coral);
+  background-color: var(--color-teal);
   color: var(--color-white);
   font-family: var(--heading-font-family);
   font-weight: 700;
   font-size: 13px;
   padding: 8px 16px;
   border-radius: 6px;
+  border: none;
   white-space: nowrap;
   text-decoration: none;
   transition: background-color 0.2s ease;
 }
 
 header nav .nav-cta:hover {
-  background-color: #c9432a;
+  background-color: #008e9b;
   text-decoration: none;
 }
 

@@ -16,6 +16,7 @@
   --color-purple-dark: #2d1670;
   --color-purple-deeper: #1e0e52;
   --color-coral: #e8573a;
+  --color-magenta: #7b2d8e;
   --color-teal: #00a5b5;
   --color-light-bg: #f7f5fb;
   --color-white: #fff;
@@ -48,6 +49,7 @@
 
   /* nav height */
   --nav-height: 64px;
+  --indications-bar-height: 0px;
 
   /* layout */
   --content-width: 1200px;

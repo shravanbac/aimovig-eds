@@ -23,8 +23,6 @@ export default function decorate(block) {
     sessionStorage.setItem('indications-dismissed', 'true');
     const section = block.closest('.section');
     if (section) section.remove();
-    // Recalculate body offset
-    document.body.style.paddingTop = '';
     document.documentElement.style.setProperty('--indications-bar-height', '0px');
   });
 
@@ -41,4 +39,10 @@ export default function decorate(block) {
   inner.className = 'indications-bar-inner';
   inner.append(content, closeBtn);
   block.append(inner);
+
+  // Measure height and publish CSS variable so the header can offset below
+  requestAnimationFrame(() => {
+    const h = block.getBoundingClientRect().height;
+    document.documentElement.style.setProperty('--indications-bar-height', `${h}px`);
+  });
 }
