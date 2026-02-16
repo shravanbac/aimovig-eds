@@ -26,14 +26,15 @@ export default function decorate(block) {
     document.documentElement.style.setProperty('--indications-bar-height', '0px');
   });
 
-  // Wrap existing content
+  // Extract content from block rows/cells, preserving text nodes
   const content = document.createElement('div');
   content.className = 'indications-bar-content';
-  while (block.firstElementChild) {
-    const row = block.firstElementChild;
-    while (row.firstElementChild) content.append(row.firstElementChild);
+  [...block.children].forEach((row) => {
+    [...row.children].forEach((cell) => {
+      while (cell.firstChild) content.append(cell.firstChild);
+    });
     row.remove();
-  }
+  });
 
   const inner = document.createElement('div');
   inner.className = 'indications-bar-inner';

@@ -120,6 +120,20 @@ header nav .nav-utility {
   header nav .nav-utility a:hover {
     opacity: 0.8;
   }
+
+  /* Separated last utility link (e.g. "For Healthcare Providers") */
+  header nav .nav-utility .nav-utility-separated {
+    margin-left: auto;
+    padding-left: 20px;
+    border-left: 1px solid rgb(255 255 255 / 30%);
+  }
+
+  header nav .nav-utility .nav-utility-separated a::after {
+    content: '\2197';
+    display: inline-block;
+    margin-left: 4px;
+    font-size: 10px;
+  }
 }
 
 /* position main nav below utility bar on desktop */
@@ -360,7 +374,9 @@ header nav[aria-expanded='true'] .nav-sections .nav-drop[aria-expanded='true']::
     position: relative;
     font-size: 15px;
     cursor: pointer;
-    padding: 4px 0;
+    padding: 4px 0 8px;
+    border-bottom: 3px solid transparent;
+    transition: border-color 0.2s ease;
   }
 
   header nav .nav-sections .nav-items > li > a:any-link {
@@ -368,7 +384,7 @@ header nav[aria-expanded='true'] .nav-sections .nav-drop[aria-expanded='true']::
   }
 
   header nav .nav-sections .nav-items > li > a:hover {
-    color: var(--color-purple);
+    color: var(--color-magenta);
   }
 
   /* dropdown arrow */
@@ -412,23 +428,11 @@ header nav[aria-expanded='true'] .nav-sections .nav-drop[aria-expanded='true']::
     top: calc(100% + 12px);
     padding: 16px 24px;
     background-color: var(--color-purple);
+    border-top: 4px solid #d4a843;
     border-radius: 0 0 8px 8px;
     box-shadow: 0 8px 16px rgb(0 0 0 / 15%);
     white-space: normal;
     z-index: 12;
-  }
-
-  /* dropdown triangle */
-  header nav .nav-sections .nav-items > li > ul::before {
-    content: '';
-    position: absolute;
-    top: -8px;
-    left: 20px;
-    width: 0;
-    height: 0;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-bottom: 8px solid var(--color-purple);
   }
 
   header nav .nav-sections .nav-items > li > ul > li {
@@ -443,6 +447,16 @@ header nav[aria-expanded='true'] .nav-sections .nav-drop[aria-expanded='true']::
 
   header nav .nav-sections .nav-items > li > ul > li > a:hover {
     opacity: 0.85;
+  }
+
+  /* nav hover/active accent bar — placed after dropdown rules for specificity */
+  header nav .nav-sections .nav-items > li:hover,
+  header nav .nav-sections .nav-items > li[aria-expanded='true'] {
+    border-bottom-color: var(--color-magenta);
+  }
+
+  header nav .nav-sections .nav-items > li:hover > a:any-link {
+    color: var(--color-magenta);
   }
 }
 
@@ -461,21 +475,22 @@ header nav .nav-tools p {
 
 header nav .nav-cta {
   display: inline-block;
-  background-color: var(--color-teal);
-  color: var(--color-white);
+  background-color: transparent;
+  color: var(--color-teal);
   font-family: var(--heading-font-family);
   font-weight: 700;
   font-size: 13px;
   padding: 8px 16px;
   border-radius: 6px;
-  border: none;
+  border: 2px solid var(--color-teal);
   white-space: nowrap;
   text-decoration: none;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 header nav .nav-cta:hover {
-  background-color: #008e9b;
+  background-color: var(--color-teal);
+  color: var(--color-white);
   text-decoration: none;
 }
 

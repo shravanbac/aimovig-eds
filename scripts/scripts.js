@@ -55,19 +55,11 @@ function buildIndicationsBar(main) {
   if (sessionStorage.getItem('indications-dismissed') === 'true') return;
 
   const indicationsText = 'Aimovig<sup>\u00AE</sup> (erenumab-aooe) is a prescription medicine used for the preventive treatment of migraine in adults.';
+  const p = document.createElement('p');
+  p.innerHTML = `<strong>Approved Use:</strong> ${indicationsText}`;
+
   const section = document.createElement('div');
-  section.append(
-    buildBlock('indications-bar', { elems: [] }),
-  );
-
-  // Populate the block cell with content
-  const cell = section.querySelector('div > div');
-  if (cell) {
-    const p = document.createElement('p');
-    p.innerHTML = `<strong>Approved Use:</strong> ${indicationsText}`;
-    cell.append(p);
-  }
-
+  section.append(buildBlock('indications-bar', [[p]]));
   main.prepend(section);
 }
 

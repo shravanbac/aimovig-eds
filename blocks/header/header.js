@@ -238,7 +238,13 @@ export default async function decorate(block) {
     utility, brand, sections, tools,
   } = identifySections(nav);
 
-  if (utility) utility.classList.add('nav-utility');
+  if (utility) {
+    utility.classList.add('nav-utility');
+    // Mark the last utility link (e.g. "For Healthcare Providers") for special styling
+    const utilityLinks = utility.querySelectorAll('p');
+    const lastLink = utilityLinks[utilityLinks.length - 1];
+    if (lastLink) lastLink.classList.add('nav-utility-separated');
+  }
   if (brand) brand.classList.add('nav-brand');
   if (sections) sections.classList.add('nav-sections');
   if (tools) tools.classList.add('nav-tools');
