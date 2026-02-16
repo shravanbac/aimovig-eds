@@ -5,10 +5,11 @@ header {
 
 header .nav-wrapper {
   background-color: var(--background-color);
-  width: 100%;
   z-index: 10;
   position: fixed;
   top: var(--indications-bar-height);
+  left: 0;
+  right: 0;
 }
 
 header nav {
@@ -50,7 +51,7 @@ header nav[aria-expanded='true'] {
     align-items: center;
     gap: 0 40px;
     max-width: 1400px;
-    padding: 0 20px;
+    padding: 0 32px;
     min-height: 70px;
   }
 
@@ -80,17 +81,16 @@ header nav a:hover {
 
 /* ==================== */
 
-/* Reference: .quantum-top-nav__links.quantum-drop-down-menu
-   { background-color: #901f61; height: 34px; padding: 5px 20px } */
-header nav .nav-utility {
+/* utility nav — lives inside .nav-wrapper (outside <nav>) for full-width bg */
+header .nav-utility {
   display: none;
 }
 
 @media (width >= 900px) {
-  header nav .nav-utility {
+  header .nav-utility {
     display: block;
-    position: fixed;
-    top: var(--indications-bar-height);
+    position: absolute;
+    top: 0;
     left: 0;
     right: 0;
     z-index: 11;
@@ -99,23 +99,23 @@ header nav .nav-utility {
     margin: 0;
   }
 
-  header nav .nav-utility .default-content-wrapper {
+  header .nav-utility .default-content-wrapper {
     display: flex;
     justify-content: flex-start;
     align-items: center;
     gap: 20px;
     max-width: 1400px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 32px;
     height: 32px;
+    box-sizing: border-box;
   }
 
-  header nav .nav-utility .default-content-wrapper p {
+  header .nav-utility .default-content-wrapper p {
     margin: 0;
   }
 
-  /* Reference: span { font-family: NunitoSans-Bold; font-size: 10px; color: #fff } */
-  header nav .nav-utility a:any-link {
+  header .nav-utility a:any-link {
     color: var(--color-white);
     font-size: 10px;
     font-weight: 700;
@@ -123,17 +123,15 @@ header nav .nav-utility {
     white-space: nowrap;
   }
 
-  header nav .nav-utility a:hover {
+  header .nav-utility a:hover {
     opacity: 0.8;
   }
 
-  /* Reference: .quantum-drop-down-menu__list-item:nth-child(8)
-     { margin-left: auto } + ::after with hcp-external-icon.svg */
-  header nav .nav-utility .nav-utility-separated {
+  header .nav-utility .nav-utility-separated {
     margin-left: auto;
   }
 
-  header nav .nav-utility .nav-utility-separated a::after {
+  header .nav-utility .nav-utility-separated a::after {
     content: '\2197';
     display: inline-block;
     margin-left: 4px;
@@ -483,6 +481,7 @@ header nav[aria-expanded='true'] .nav-sections .nav-drop[aria-expanded='true']::
 /* ==================== */
 header nav .nav-tools {
   grid-area: tools;
+  flex-shrink: 0;
 }
 
 header nav .nav-tools p {
