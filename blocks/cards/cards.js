@@ -7,26 +7,44 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
  */
 function decorateCtaVariant(block, ul) {
   ul.querySelectorAll('li').forEach((li) => {
-    const body = li.querySelector('.cards-card-body');
-    if (!body) return;
+    const bodies = [...li.querySelectorAll('.cards-card-body')];
+    const primaryBody = bodies[0];
+    if (!primaryBody) return;
 
     // Find the link inside the card body
-    const link = body.querySelector('a');
+    const link = primaryBody.querySelector('a');
     if (!link) return;
 
     const { href } = link;
+    const title = link.textContent;
 
-    // Unwrap the link text into its parent, keeping it inline
-    const linkParent = link.parentElement;
-    linkParent.innerHTML = link.innerHTML;
+    // Collect subtitle text from additional body divs
+    let subtitle = '';
+    for (let i = 1; i < bodies.length; i += 1) {
+      const text = bodies[i].textContent.trim();
+      if (text) subtitle = text;
+      bodies[i].remove();
+    }
+
+    // Rebuild the primary body with proper <p> structure
+    primaryBody.textContent = '';
+    const titleP = document.createElement('p');
+    const titleStrong = document.createElement('strong');
+    titleStrong.textContent = title;
+    titleP.append(titleStrong);
+    primaryBody.append(titleP);
+
+    if (subtitle) {
+      const subtitleP = document.createElement('p');
+      subtitleP.textContent = subtitle;
+      primaryBody.append(subtitleP);
+    }
 
     // Create a wrapper <a> around the entire card content
     const wrapper = document.createElement('a');
     wrapper.href = href;
     wrapper.className = 'cards-card-link';
-
-    // Move card body into wrapper
-    wrapper.append(body);
+    wrapper.append(primaryBody);
 
     // Add arrow SVG
     const arrow = document.createElement('span');
@@ -54,6 +72,12 @@ export default function decorate(block) {
     ul.append(li);
   });
   ul.querySelectorAll('picture > img').forEach((img) => img.closest('picture').replaceWith(createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }])));
+
+  // Auto-detect CTA variant: no images and has strong > a links
+  if (!block.classList.contains('cta') && !ul.querySelector('picture') && ul.querySelector('strong > a')) {
+    block.classList.add('cta');
+  }
+
   block.replaceChildren(ul);
 
   // Decorate CTA variant

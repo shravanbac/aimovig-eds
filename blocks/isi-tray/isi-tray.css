@@ -46,6 +46,7 @@
   max-height: 80px;
 }
 
+.isi-tray .isi-tray-preview h2,
 .isi-tray .isi-tray-preview h3 {
   font-family: var(--heading-font-family);
   font-size: 18px;
@@ -102,6 +103,7 @@
     padding: 20px 32px;
   }
 
+  .isi-tray .isi-tray-preview h2,
   .isi-tray .isi-tray-preview h3 {
     font-size: 20px;
   }
@@ -132,6 +134,7 @@
   padding: 32px 16px 48px;
 }
 
+.isi-tray .isi-tray-content h2,
 .isi-tray .isi-tray-content h3 {
   font-family: var(--heading-font-family);
   font-size: 20px;
@@ -140,6 +143,7 @@
   line-height: 1.3;
 }
 
+.isi-tray .isi-tray-content h2:first-child,
 .isi-tray .isi-tray-content h3:first-child {
   margin-top: 0;
 }
@@ -183,6 +187,7 @@
     padding: 48px 32px 64px;
   }
 
+  .isi-tray .isi-tray-content h2,
   .isi-tray .isi-tray-content h3 {
     font-size: 22px;
   }

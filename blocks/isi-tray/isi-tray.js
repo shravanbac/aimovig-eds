@@ -8,9 +8,18 @@ export default function decorate(block) {
   content.className = 'isi-tray-content';
 
   [...block.children].forEach((row) => {
-    [...row.children].forEach((cell) => {
-      while (cell.firstElementChild) content.append(cell.firstElementChild);
-    });
+    const cell = row.querySelector(':scope > div');
+    if (!cell || !cell.textContent.trim()) return;
+
+    // If cell has block-level elements, move all child nodes (including text)
+    if (cell.querySelector('h1, h2, h3, h4, h5, h6, p, ul, ol')) {
+      while (cell.firstChild) content.append(cell.firstChild);
+    } else {
+      // Bare text or inline-only content — wrap in <p>
+      const p = document.createElement('p');
+      while (cell.firstChild) p.append(cell.firstChild);
+      content.append(p);
+    }
   });
 
   block.textContent = '';
@@ -27,7 +36,7 @@ export default function decorate(block) {
   const previewContent = document.createElement('div');
   previewContent.className = 'isi-tray-preview';
 
-  const firstHeading = content.querySelector('h3');
+  const firstHeading = content.querySelector('h2, h3');
   if (firstHeading) {
     const previewHeading = firstHeading.cloneNode(true);
     previewContent.append(previewHeading);
